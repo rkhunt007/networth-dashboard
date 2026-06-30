@@ -1,0 +1,33 @@
+{
+  "name": "net-worth-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "prisma generate && nuxt prepare",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "@nuxt/ui": "^4.9.0",
+    "@prisma/adapter-libsql": "^6.19.3",
+    "@prisma/client": "^6.19.3",
+    "apexcharts": "^5.15.2",
+    "nuxt": "^4.4.8",
+    "nuxt-auth-utils": "^0.5.29",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0",
+    "vue3-apexcharts": "^1.11.1",
+    "yahoo-finance2": "^3.15.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prisma": "^6.9.0",
+    "typescript": "^5.7.0",
+    "vue-tsc": "^2.0.0"
+  }
+}

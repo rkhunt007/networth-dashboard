@@ -1,0 +1,106 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Owner {
+  id           Int           @id @default(autoincrement())
+  name         String
+  type         String        // SELF | SPOUSE | JOINT
+  createdAt    DateTime      @default(now())
+  accounts     Account[]
+  manualAssets ManualAsset[]
+  debts        Debt[]
+}
+
+model Institution {
+  id       Int       @id @default(autoincrement())
+  name     String
+  color    String    @default("#3B82F6")
+  accounts Account[]
+}
+
+model Account {
+  id               Int          @id @default(autoincrement())
+  name             String
+  type             String       // RRSP | TFSA | RESP | NON_REG | CASH | CRYPTO
+  currency         String       @default("CAD")
+  contributionRoom Float?
+  ownerId          Int
+  institutionId    Int
+  createdAt        DateTime     @default(now())
+  owner            Owner        @relation(fields: [ownerId], references: [id])
+  institution      Institution  @relation(fields: [institutionId], references: [id])
+  holdings         Holding[]
+  cashBalance      CashBalance?
+}
+
+model Holding {
+  id        Int      @id @default(autoincrement())
+  symbol    String
+  name      String   @default("")
+  shares    Float
+  acb       Float?
+  currency  String   @default("CAD")
+  accountId Int
+  createdAt DateTime @default(now())
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+}
+
+model CashBalance {
+  id        Int     @id @default(autoincrement())
+  amount    Float   @default(0)
+  amountUsd Float   @default(0)
+  accountId Int     @unique
+  account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+}
+
+model ManualAsset {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type      String   // HOME | VEHICLE | PENSION | INVESTMENT_PROPERTY | OTHER
+  value     Float
+  currency  String   @default("CAD")
+  ownerId   Int
+  createdAt DateTime @default(now())
+  owner     Owner    @relation(fields: [ownerId], references: [id])
+}
+
+model Debt {
+  id           Int      @id @default(autoincrement())
+  name         String
+  type         String   // MORTGAGE | CAR_LOAN | STUDENT_LOAN | CREDIT_CARD | LOC | HELOC | OTHER
+  balance      Float
+  currency     String   @default("CAD")
+  interestRate Float?
+  ownerId      Int
+  createdAt    DateTime @default(now())
+  owner        Owner    @relation(fields: [ownerId], references: [id])
+}
+
+model CachedPrice {
+  id        Int      @id @default(autoincrement())
+  symbol    String   @unique
+  price     Float
+  currency  String
+  updatedAt DateTime @updatedAt
+}
+
+model ExchangeRate {
+  id        Int      @id @default(autoincrement())
+  pair      String   @unique
+  rate      Float
+  updatedAt DateTime @updatedAt
+}
+
+model NetWorthSnapshot {
+  id       Int      @id @default(autoincrement())
+  date     DateTime @default(now())
+  totalCAD Float
+  dataJson String
+}

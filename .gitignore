@@ -1,0 +1,10 @@
+node_modules
+.nuxt
+.output
+.vercel
+dist
+prisma/dev.db
+prisma/dev.db-journal
+prisma/dev.db-wal
+prisma/dev.db-shm
+.env
