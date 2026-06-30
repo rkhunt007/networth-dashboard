@@ -1,14 +1,14 @@
 <template>
   <div class="p-6">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
       <div>
         <h1 class="text-2xl font-bold">Dashboard</h1>
         <p v-if="exchangeRate?.rate" class="text-xs text-(--ui-text-muted) mt-0.5">
           USD/CAD: {{ exchangeRate.rate.toFixed(4) }}
         </p>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex flex-wrap items-center gap-3">
         <span v-if="priceUpdateTime" class="text-xs text-(--ui-text-muted)">
           Prices: {{ relativeTime(priceUpdateTime) }}
         </span>
@@ -66,7 +66,9 @@
             <UButton to="/accounts" variant="link" size="sm">Manage →</UButton>
           </div>
         </template>
-        <UTable :data="netWorthData.accounts" :columns="accountColumns" />
+        <div class="overflow-x-auto">
+          <UTable :data="netWorthData.accounts" :columns="accountColumns" />
+        </div>
       </UCard>
     </template>
   </div>

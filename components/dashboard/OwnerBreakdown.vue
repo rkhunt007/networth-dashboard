@@ -1,7 +1,7 @@
 <template>
   <div
-    class="grid gap-4"
-    :class="owners.length >= 3 ? 'grid-cols-3' : owners.length === 2 ? 'grid-cols-2' : 'grid-cols-1'"
+    class="grid grid-cols-1 gap-4"
+    :class="owners.length >= 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : owners.length === 2 ? 'sm:grid-cols-2' : ''"
   >
     <UCard v-for="owner in owners" :key="owner.ownerId">
       <div class="flex items-center gap-2 mb-4">

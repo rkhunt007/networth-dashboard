@@ -1,7 +1,17 @@
 <template>
   <div class="flex h-screen bg-(--ui-bg) overflow-hidden">
+    <!-- Mobile backdrop -->
+    <div
+      v-if="mobileNavOpen"
+      class="fixed inset-0 z-40 bg-black/50 md:hidden"
+      @click="mobileNavOpen = false"
+    />
+
     <!-- Sidebar -->
-    <aside class="w-60 bg-(--ui-bg-elevated) border-r border-(--ui-border) flex flex-col shrink-0">
+    <aside
+      class="fixed inset-y-0 left-0 z-50 w-60 bg-(--ui-bg-elevated) border-r border-(--ui-border) flex flex-col shrink-0 transition-transform duration-200 ease-in-out md:static md:translate-x-0"
+      :class="mobileNavOpen ? 'translate-x-0' : '-translate-x-full'"
+    >
       <!-- Logo -->
       <div class="h-16 flex items-center gap-3 px-5 border-b border-(--ui-border)">
         <UIcon name="i-heroicons-chart-pie" class="text-primary size-7" />
@@ -18,6 +28,7 @@
           :class="isActive(item.to)
             ? 'bg-primary/10 text-primary'
             : 'text-(--ui-text-muted) hover:bg-(--ui-bg-accented) hover:text-(--ui-text)'"
+          @click="mobileNavOpen = false"
         >
           <UIcon :name="item.icon" class="size-5 shrink-0" />
           {{ item.label }}
@@ -36,16 +47,37 @@
       </div>
     </aside>
 
-    <!-- Main content -->
-    <main class="flex-1 overflow-auto">
-      <slot />
-    </main>
+    <!-- Main column -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <!-- Mobile top bar -->
+      <header
+        class="md:hidden h-14 flex items-center gap-3 px-4 border-b border-(--ui-border) bg-(--ui-bg-elevated) shrink-0"
+      >
+        <button
+          class="p-1.5 -ml-1.5 rounded-lg text-(--ui-text-muted) hover:bg-(--ui-bg-accented) hover:text-(--ui-text) transition-colors"
+          aria-label="Open navigation menu"
+          @click="mobileNavOpen = true"
+        >
+          <UIcon name="i-heroicons-bars-3" class="size-6" />
+        </button>
+        <UIcon name="i-heroicons-chart-pie" class="text-primary size-6" />
+        <span class="font-bold text-base">Net Worth</span>
+      </header>
+
+      <!-- Main content -->
+      <main class="flex-1 overflow-auto">
+        <slot />
+      </main>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
 const { clear: clearSession } = useUserSession()
+
+const mobileNavOpen = ref(false)
+watch(() => route.path, () => { mobileNavOpen.value = false })
 
 const navItems = [
   { label: 'Dashboard', icon: 'i-heroicons-home', to: '/' },

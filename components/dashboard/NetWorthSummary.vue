@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
     <UCard>
       <div class="flex items-center gap-3 mb-2">
         <UIcon name="i-heroicons-arrow-trending-up" class="size-5 text-green-500" />

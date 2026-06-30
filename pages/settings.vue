@@ -14,7 +14,7 @@
       </template>
 
       <div v-if="showOwnerForm" class="mb-4 p-4 bg-(--ui-bg-accented) rounded-lg">
-        <div class="grid grid-cols-2 gap-3 mb-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
           <div>
             <label class="block text-xs font-medium mb-1 text-(--ui-text-muted)">Name</label>
             <UInput v-model="ownerForm.name" placeholder="e.g. Jane" />
@@ -57,7 +57,7 @@
       </template>
 
       <div v-if="showInstForm" class="mb-4 p-4 bg-(--ui-bg-accented) rounded-lg">
-        <div class="grid grid-cols-2 gap-3 mb-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
           <div>
             <label class="block text-xs font-medium mb-1 text-(--ui-text-muted)">Name</label>
             <UInput v-model="instForm.name" placeholder="e.g. TD Bank" />

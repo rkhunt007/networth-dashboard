@@ -1,8 +1,8 @@
 <template>
   <div class="p-6">
-    <div class="flex items-center gap-3 mb-6">
+    <div class="flex flex-wrap items-center gap-3 mb-6">
       <UButton to="/accounts" icon="i-heroicons-arrow-left" variant="ghost" size="sm" />
-      <div class="flex-1">
+      <div class="flex-1 min-w-0">
         <h1 class="text-2xl font-bold">{{ account?.name }}</h1>
         <p class="text-sm text-(--ui-text-muted)">
           {{ account?.owner?.name }} · {{ account?.institution?.name }} · {{ account?.type }}
@@ -50,7 +50,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Holdings -->
         <div class="lg:col-span-2 space-y-4">
-          <div class="flex items-center justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2">
             <h2 class="font-semibold">Holdings</h2>
             <div class="flex items-center gap-2">
               <UButton

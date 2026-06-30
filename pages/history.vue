@@ -14,11 +14,13 @@
       <div v-if="!snapshots?.length" class="text-center py-10 text-(--ui-text-muted) text-sm">
         No snapshots yet. Click "Save Snapshot" to record today's net worth.
       </div>
-      <UTable
-        v-else
-        :data="tableRows"
-        :columns="columns"
-      />
+      <div v-else class="overflow-x-auto">
+        <UTable
+          :data="tableRows"
+          :columns="columns"
+          class="min-w-[36rem]"
+        />
+      </div>
     </UCard>
   </div>
 </template>
